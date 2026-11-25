@@ -1,19 +1,25 @@
 {
-  "name": "kesariya-catering-website",
-  "version": "1.0.0",
-  "description": "Kesariya Catering - Premier Food, Beverage & Event Decor Catering Services",
-  "main": "server.js",
+  "name": "kesariya-catering",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kesariya Catering: pure-veg catering and event decor, Surat",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "check": "astro check"
   },
-  "keywords": [
-    "catering",
-    "kesariya",
-    "wedding-catering",
-    "event-decoration",
-    "food-and-beverage"
-  ],
-  "author": "Kesariya Catering",
-  "license": "ISC"
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.1.14",
+    "@fontsource-variable/anek-devanagari": "^5.3.0",
+    "@fontsource-variable/anek-gujarati": "^5.3.0",
+    "@fontsource-variable/anek-latin": "^5.3.0",
+    "astro": "^7.4.13",
+    "lucide-static": "^1.80.0"
+  }
 }

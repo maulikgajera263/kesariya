@@ -1,0 +1,31 @@
+---
+// Lucide icons, inlined at build time.
+import phone from 'lucide-static/icons/phone.svg?raw';
+import message from 'lucide-static/icons/message-circle.svg?raw';
+import pin from 'lucide-static/icons/map-pin.svg?raw';
+import arrow from 'lucide-static/icons/arrow-right.svg?raw';
+import check from 'lucide-static/icons/check.svg?raw';
+import x from 'lucide-static/icons/x.svg?raw';
+import menu from 'lucide-static/icons/menu.svg?raw';
+import calendar from 'lucide-static/icons/calendar.svg?raw';
+import users from 'lucide-static/icons/users.svg?raw';
+import search from 'lucide-static/icons/search.svg?raw';
+import download from 'lucide-static/icons/download.svg?raw';
+import logout from 'lucide-static/icons/log-out.svg?raw';
+import trash from 'lucide-static/icons/trash-2.svg?raw';
+import chevron from 'lucide-static/icons/chevron-down.svg?raw';
+import flame from 'lucide-static/icons/flame.svg?raw';
+import globe from 'lucide-static/icons/globe.svg?raw';
+
+const ICONS = { phone, message, pin, arrow, check, x, menu, calendar, users, search, download, logout, trash, chevron, flame, globe };
+export type IconName = keyof typeof ICONS;
+interface Props { name: IconName; size?: number; class?: string }
+const { name, size = 20, class: cls = '' } = Astro.props;
+const svg = ICONS[name]
+  .replace(/<!--.*?-->/s, '')
+  .replace(/width="24"/, `width="${size}"`)
+  .replace(/height="24"/, `height="${size}"`)
+  .replace(/class="[^"]*"/, `class="icon ${cls}" aria-hidden="true" focusable="false"`)
+  .replace(/stroke-width="2"/, 'stroke-width="1.8"');
+---
+<Fragment set:html={svg} />

@@ -1,0 +1,762 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T21:49:31+00:00",
+  "title": "Design System: Kesariya Catering",
+  "extensions": {
+    "colorMeta": {
+      "mehndi-950": {
+        "role": "neutral",
+        "displayName": "Deep Mehndi",
+        "canonical": "#0c2218",
+        "cssVariable": "--mehndi-950",
+        "tonalRamp": [
+          "#050d09",
+          "#1b2922",
+          "#33473d",
+          "#50685b",
+          "#70897c",
+          "#93ac9f",
+          "#b9d0c3",
+          "#e2f4ea"
+        ]
+      },
+      "mehndi-900": {
+        "role": "neutral",
+        "displayName": "Mehndi",
+        "canonical": "#123426",
+        "cssVariable": "--mehndi-900",
+        "tonalRamp": [
+          "#030e09",
+          "#152a21",
+          "#2c493c",
+          "#486a5a",
+          "#688c7b",
+          "#8aaf9d",
+          "#b2d2c2",
+          "#ddf6e9"
+        ],
+        "projectScale": [
+          "#0c2218",
+          "#123426",
+          "#1a4532",
+          "#245a42",
+          "#b9cfc0"
+        ],
+        "note": "Project defines --mehndi-950/900/800/700/200; --mehndi-200 (#b9cfc0) is declared but unused."
+      },
+      "mehndi-800": {
+        "role": "neutral",
+        "displayName": "Mehndi Mid",
+        "canonical": "#1a4532",
+        "cssVariable": "--mehndi-800",
+        "tonalRamp": [
+          "#020f08",
+          "#112b1f",
+          "#264b39",
+          "#416c57",
+          "#628e78",
+          "#84b19a",
+          "#add4bf",
+          "#d9f7e7"
+        ]
+      },
+      "mehndi-700": {
+        "role": "neutral",
+        "displayName": "Mehndi Light",
+        "canonical": "#245a42",
+        "cssVariable": "--mehndi-700",
+        "tonalRamp": [
+          "#000f07",
+          "#0a2c1e",
+          "#1e4c37",
+          "#386e55",
+          "#5a9075",
+          "#7cb397",
+          "#a6d6bd",
+          "#d4f9e5"
+        ]
+      },
+      "haldi": {
+        "role": "tertiary",
+        "displayName": "Haldi Yellow",
+        "canonical": "#f2b51c",
+        "cssVariable": "--haldi",
+        "tonalRamp": [
+          "#1a0500",
+          "#3e1b00",
+          "#653500",
+          "#8c5400",
+          "#b07600",
+          "#d59900",
+          "#f5c051",
+          "#ffe99b"
+        ]
+      },
+      "haldi-soft": {
+        "role": "tertiary",
+        "displayName": "Soft Haldi",
+        "canonical": "#f8d36a",
+        "cssVariable": "--haldi-soft",
+        "tonalRamp": [
+          "#150800",
+          "#362100",
+          "#5a3d00",
+          "#7e5c00",
+          "#a07d00",
+          "#c5a132",
+          "#e6c66f",
+          "#ffedac"
+        ]
+      },
+      "kesar": {
+        "role": "primary",
+        "displayName": "Kesar Orange",
+        "canonical": "#f08a24",
+        "cssVariable": "--kesar",
+        "tonalRamp": [
+          "#200000",
+          "#490d00",
+          "#752300",
+          "#a04100",
+          "#c66400",
+          "#ed8820",
+          "#ffb166",
+          "#ffdea6"
+        ]
+      },
+      "kesar-deep": {
+        "role": "primary",
+        "displayName": "Fired Kesar",
+        "canonical": "#d9700f",
+        "cssVariable": "--kesar-deep",
+        "tonalRamp": [
+          "#200000",
+          "#4a0b00",
+          "#772000",
+          "#a23e00",
+          "#c96100",
+          "#f08531",
+          "#ffaf6e",
+          "#ffdcab"
+        ]
+      },
+      "chilli": {
+        "role": "tertiary",
+        "displayName": "Chilli Red",
+        "canonical": "#b8301c",
+        "cssVariable": "--chilli",
+        "tonalRamp": [
+          "#240000",
+          "#510000",
+          "#810000",
+          "#af2612",
+          "#d74e39",
+          "#ff745c",
+          "#ffa18a",
+          "#ffd2bf"
+        ]
+      },
+      "kumkum": {
+        "role": "tertiary",
+        "displayName": "Kumkum Red",
+        "canonical": "#6e1a12",
+        "cssVariable": "--kumkum",
+        "tonalRamp": [
+          "#1d0101",
+          "#45100b",
+          "#70261e",
+          "#994237",
+          "#bf6457",
+          "#e68779",
+          "#ffb0a2",
+          "#ffdcd0"
+        ]
+      },
+      "kumkum-ink": {
+        "role": "tertiary",
+        "displayName": "Kumkum Cream",
+        "canonical": "#fbe7d8",
+        "cssVariable": "--kumkum-ink",
+        "tonalRamp": [
+          "#100a06",
+          "#2d231b",
+          "#4d3f34",
+          "#6e5d51",
+          "#907e71",
+          "#b4a193",
+          "#d6c6b9",
+          "#f9ece2"
+        ]
+      },
+      "brass": {
+        "role": "secondary",
+        "displayName": "Polished Brass",
+        "canonical": "#d9a441",
+        "cssVariable": "--brass",
+        "tonalRamp": [
+          "#180600",
+          "#3b1d00",
+          "#613800",
+          "#875600",
+          "#ab7800",
+          "#cf9b36",
+          "#f0c171",
+          "#ffe9ae"
+        ]
+      },
+      "brass-light": {
+        "role": "secondary",
+        "displayName": "Brass Highlight",
+        "canonical": "#f3d27a",
+        "cssVariable": "--brass-light",
+        "tonalRamp": [
+          "#140900",
+          "#342200",
+          "#573e00",
+          "#7b5d00",
+          "#9d7e1f",
+          "#c1a149",
+          "#e3c67c",
+          "#ffedb5"
+        ]
+      },
+      "brass-deep": {
+        "role": "secondary",
+        "displayName": "Aged Brass",
+        "canonical": "#8a5a14",
+        "cssVariable": "--brass-deep",
+        "tonalRamp": [
+          "#170600",
+          "#3a1d00",
+          "#603800",
+          "#85550c",
+          "#a97737",
+          "#ce9a5b",
+          "#eec089",
+          "#ffe8be"
+        ]
+      },
+      "leaf": {
+        "role": "tertiary",
+        "displayName": "Leaf Green",
+        "canonical": "#2f7d3a",
+        "cssVariable": "--leaf",
+        "tonalRamp": [
+          "#001100",
+          "#002f06",
+          "#035117",
+          "#247331",
+          "#499652",
+          "#6dba74",
+          "#9add9e",
+          "#cbfece"
+        ]
+      },
+      "chaas": {
+        "role": "neutral",
+        "displayName": "Chaas",
+        "canonical": "#f4f5ef",
+        "cssVariable": "--chaas",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252522",
+          "#42423e",
+          "#61625d",
+          "#82837e",
+          "#a5a6a0",
+          "#c9cac5",
+          "#eeefeb"
+        ]
+      },
+      "chaas-2": {
+        "role": "neutral",
+        "displayName": "Chaas Deep",
+        "canonical": "#e9ece2",
+        "cssVariable": "--chaas-2",
+        "tonalRamp": [
+          "#0b0c09",
+          "#242621",
+          "#41433c",
+          "#60625a",
+          "#81847b",
+          "#a4a69d",
+          "#c8cac2",
+          "#edefe9"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff",
+        "cssVariable": null,
+        "note": "Literal value in source, not a custom property.",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#13241a",
+        "cssVariable": "--ink",
+        "tonalRamp": [
+          "#070d09",
+          "#1d2821",
+          "#36463c",
+          "#54675b",
+          "#74887b",
+          "#96ab9e",
+          "#bccfc3",
+          "#e4f3e9"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#46574c",
+        "cssVariable": "--ink-soft",
+        "tonalRamp": [
+          "#070d09",
+          "#1e2821",
+          "#37463d",
+          "#55665b",
+          "#75887c",
+          "#98ab9e",
+          "#bdcec3",
+          "#e5f2ea"
+        ]
+      },
+      "on-green": {
+        "role": "neutral",
+        "displayName": "On-Green",
+        "canonical": "#f4f5ef",
+        "cssVariable": "--on-green",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252522",
+          "#42423e",
+          "#61625d",
+          "#82837e",
+          "#a5a6a0",
+          "#c9cac5",
+          "#eeefeb"
+        ]
+      },
+      "on-green-soft": {
+        "role": "neutral",
+        "displayName": "Soft On-Green",
+        "canonical": "#bfd2c4",
+        "cssVariable": "--on-green-soft",
+        "tonalRamp": [
+          "#070d09",
+          "#1e2821",
+          "#38463c",
+          "#55665a",
+          "#76887b",
+          "#98ab9d",
+          "#becec2",
+          "#e6f2e9"
+        ]
+      },
+      "field-stroke": {
+        "role": "neutral",
+        "displayName": "Field Stroke",
+        "canonical": "#c9cfbf",
+        "cssVariable": null,
+        "note": "Literal value in source, not a custom property.",
+        "tonalRamp": [
+          "#0a0c07",
+          "#23261e",
+          "#404438",
+          "#5e6456",
+          "#7f8576",
+          "#a2a898",
+          "#c6cbbe",
+          "#ecf0e6"
+        ]
+      },
+      "alert-wash": {
+        "role": "tertiary",
+        "displayName": "Chilli Wash",
+        "canonical": "#fbe6e1",
+        "cssVariable": null,
+        "note": "Literal value in source, not a custom property.",
+        "tonalRamp": [
+          "#100908",
+          "#2d2220",
+          "#4d3e3b",
+          "#6e5d58",
+          "#907d79",
+          "#b4a09b",
+          "#d6c5c0",
+          "#f9ebe8"
+        ]
+      },
+      "alert-ink": {
+        "role": "tertiary",
+        "displayName": "Chilli Ink",
+        "canonical": "#7a1d10",
+        "cssVariable": null,
+        "note": "Literal value in source, not a custom property.",
+        "tonalRamp": [
+          "#1f0000",
+          "#470d06",
+          "#732217",
+          "#9d3f30",
+          "#c46150",
+          "#eb8472",
+          "#ffad9c",
+          "#ffdacc"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "rgba(19, 36, 26, 0.16)",
+        "cssVariable": "--rule"
+      },
+      "rule-on-green": {
+        "role": "neutral",
+        "displayName": "Rule on Green",
+        "canonical": "rgba(244, 245, 239, 0.18)",
+        "cssVariable": "--rule-on-green"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only, white on mehndi, max 13ch.",
+        "fontStretch": "116%",
+        "scriptOverrides": {
+          "gu,hi": {
+            "lineHeight": 1.22,
+            "letterSpacing": "0",
+            "fontStretch": "108%"
+          }
+        }
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section H2s and the footer wordmark.",
+        "fontStretch": "116%",
+        "scriptOverrides": {
+          "gu,hi": {
+            "lineHeight": 1.22,
+            "letterSpacing": "0",
+            "fontStretch": "108%"
+          }
+        }
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Menu group titles, dietary terms, occasion names, the large review quote."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Section intros and hero subline, 34 to 36ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text; line-height 1.75 on Gujarati and Hindi pages.",
+        "scriptOverrides": {
+          "gu,hi": {
+            "lineHeight": 1.75
+          }
+        }
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, metadata, dish descriptions. Never uppercase."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill buttons; portal tabs at 600."
+      }
+    },
+    "fonts": [
+      {
+        "family": "Anek Latin Variable",
+        "source": "@fontsource-variable/anek-latin/wdth.css"
+      },
+      {
+        "family": "Anek Gujarati Variable",
+        "source": "@fontsource-variable/anek-gujarati/wdth.css"
+      },
+      {
+        "family": "Anek Devanagari Variable",
+        "source": "@fontsource-variable/anek-devanagari/wdth.css"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "shadow-1",
+        "value": "0 2px 4px rgba(12, 34, 24, 0.08), 0 8px 24px rgba(12, 34, 24, 0.1)",
+        "purpose": "Lift Low: the active portal tab."
+      },
+      {
+        "name": "shadow-2",
+        "value": "0 6px 12px rgba(12, 34, 24, 0.14), 0 20px 48px rgba(12, 34, 24, 0.18)",
+        "purpose": "Lift High: hero tray, plan panel, mobile nav sheet, login card."
+      },
+      {
+        "name": "button-press-lift",
+        "value": "0 4px 10px rgba(12, 34, 24, 0.22)",
+        "purpose": "Primary button hover, with translateY(-1px)."
+      },
+      {
+        "name": "brass-rim",
+        "value": "0 0 0 1.5px #d9a441, 0 0 0 6px #f0e2b8, 0 0 0 7.5px #8a5a14, 0 6px 12px rgba(12, 34, 24, 0.14), 0 20px 48px rgba(12, 34, 24, 0.18)",
+        "purpose": "Plan panel: a thali rim around the inquiry form."
+      },
+      {
+        "name": "brass-bead",
+        "value": "0 0 0 1.5px #d9a441, 0 2px 6px rgba(12, 34, 24, 0.35)",
+        "purpose": "Plate labels on the hero thali."
+      },
+      {
+        "name": "tray-glint",
+        "value": "inset 0 1px 0 rgba(243, 210, 122, 0.18), 0 6px 12px rgba(12, 34, 24, 0.14), 0 20px 48px rgba(12, 34, 24, 0.18)",
+        "purpose": "Hero quick-inquiry tray, with a 1px rgba(217, 164, 65, 0.45) border."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid #d9700f; outline-offset: 3px",
+        "purpose": "Focus on light grounds; #f3d27a on green and dark grounds."
+      },
+      {
+        "name": "input-focus-halo",
+        "value": "0 0 0 3px rgba(240, 138, 36, 0.28)",
+        "purpose": "Input focus, with border #d9700f."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "House easing for lift, bowl fill, plate settle and ladle-in."
+      },
+      {
+        "name": "state-fast",
+        "value": "0.2s",
+        "purpose": "Colour and border transitions on buttons, links, chips, inputs."
+      },
+      {
+        "name": "lift",
+        "value": "0.25s",
+        "purpose": "Button lift and shadow on hover."
+      },
+      {
+        "name": "plate-settle",
+        "value": "1.4s ease-out; rotate(-14deg) scale(0.94) to rest",
+        "purpose": "Hero thali entrance."
+      },
+      {
+        "name": "ladle-in",
+        "value": "0.7s ease-out; scale(0.3) rotate(-40deg) to scale(1.06) rotate(4deg) to rest",
+        "purpose": "Food filling a katori in the builder plate."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "opacity 0.2s linear; animations off; smooth scroll off",
+        "purpose": "prefers-reduced-motion replacement for all of the above."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "nav-collapse",
+        "value": "1080px"
+      },
+      {
+        "name": "portal-two-col",
+        "value": "1000px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "920px"
+      },
+      {
+        "name": "band-tighten",
+        "value": "860px"
+      },
+      {
+        "name": "header-sheet",
+        "value": "720px"
+      },
+      {
+        "name": "single-col-lists",
+        "value": "600px"
+      },
+      {
+        "name": "single-col-fields",
+        "value": "520px"
+      }
+    ],
+    "layout": {
+      "wrap": "min(1240px, 100% - 2 * clamp(1rem, 4vw, 2.5rem))",
+      "headerHeight": "72px",
+      "scrollPaddingTop": "5.5rem",
+      "minTapTarget": "44px"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Kesar pill for the inquiry action (Plan my feast, Send my thali).",
+      "html": "<button class=\"ds-btn-primary\">Plan my feast <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.55em; min-height: 48px; padding: 0.7rem 1.5rem; border-radius: 999px; border: 1.5px solid transparent; background: var(--kesar, #f08a24); color: var(--mehndi-950, #0c2218); font-family: var(--font); font-size: 1.0625rem; font-weight: 650; font-stretch: 108%; line-height: 1.2; cursor: pointer; transition: background-color 0.2s, box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: var(--kesar-deep, #d9700f); box-shadow: 0 4px 10px rgba(12, 34, 24, 0.22); transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(0); box-shadow: none; } .ds-btn-primary:focus-visible { outline: 3px solid var(--kesar-deep, #d9700f); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Mehndi pill for secondary commitments on light grounds (Send this thali, Call Bharatbhai, Log in).",
+      "html": "<button class=\"ds-btn-ink\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/></svg> Call Bharatbhai</button>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; justify-content: center; gap: 0.55em; min-height: 48px; padding: 0.7rem 1.5rem; border-radius: 999px; border: 1.5px solid transparent; background: var(--mehndi-900, #123426); color: var(--on-green, #f4f5ef); font-family: var(--font); font-size: 1.0625rem; font-weight: 650; font-stretch: 108%; line-height: 1.2; cursor: pointer; transition: background-color 0.2s; } .ds-btn-ink:hover { background: var(--mehndi-700, #245a42); } .ds-btn-ink:focus-visible { outline: 3px solid var(--kesar-deep, #d9700f); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Outlined pill beside an ink button, used for WhatsApp.",
+      "html": "<button class=\"ds-btn-ghost\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg> WhatsApp</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 0.55em; min-height: 48px; padding: 0.7rem 1.5rem; border-radius: 999px; border: 1.5px solid currentColor; background: transparent; color: var(--mehndi-900, #123426); font-family: var(--font); font-size: 1.0625rem; font-weight: 650; font-stretch: 108%; line-height: 1.2; cursor: pointer; transition: background-color 0.2s; } .ds-btn-ghost:hover { background: rgba(18, 52, 38, 0.08); } .ds-btn-ghost:focus-visible { outline: 3px solid var(--kesar-deep, #d9700f); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field with a 1.5px stroke and a kesar focus halo; label above.",
+      "html": "<label class=\"ds-field\"><span>Guests <small>(optional)</small></span><input class=\"ds-input\" type=\"number\" placeholder=\"e.g. 300\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.35rem; font-family: var(--font); color: var(--ink, #13241a); } .ds-field > span { font-size: 0.875rem; font-weight: 600; letter-spacing: 0.01em; } .ds-field small { font-weight: 450; opacity: 0.75; } .ds-input { width: 100%; min-height: 48px; padding: 0.65rem 0.9rem; border-radius: 10px; border: 1.5px solid #c9cfbf; background: #fff; color: var(--ink, #13241a); font: inherit; font-size: 1.0625rem; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input::placeholder { color: #6d7a70; } .ds-input:hover { border-color: #a8b29d; } .ds-input:focus { outline: none; border-color: var(--kesar-deep, #d9700f); box-shadow: 0 0 0 3px rgba(240, 138, 36, 0.28); } .ds-input[aria-invalid='true'] { border-color: var(--chilli, #b8301c); }"
+    },
+    {
+      "name": "Service Chip",
+      "kind": "chip",
+      "refersTo": "chip-service",
+      "description": "Single-select pill for the service type; selected fills mehndi.",
+      "html": "<div class=\"ds-chips\"><label class=\"ds-chip\"><input type=\"radio\" name=\"ds-svc\" checked><span>Food and décor</span></label><label class=\"ds-chip\"><input type=\"radio\" name=\"ds-svc\"><span>Food only</span></label></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; font-family: var(--font); } .ds-chip { position: relative; } .ds-chip input { position: absolute; opacity: 0; inset: 0; } .ds-chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 0.5rem 1rem; border-radius: 999px; border: 1.5px solid #c9cfbf; color: var(--ink, #13241a); font-weight: 550; cursor: pointer; transition: background-color 0.2s, border-color 0.2s, color 0.2s; } .ds-chip span:hover { border-color: var(--brass-deep, #8a5a14); } .ds-chip input:checked + span { background: var(--mehndi-900, #123426); border-color: var(--mehndi-900, #123426); color: var(--on-green, #f4f5ef); } .ds-chip input:focus-visible + span { outline: 3px solid var(--kesar-deep, #d9700f); outline-offset: 2px; }"
+    },
+    {
+      "name": "Katori Dish Pick",
+      "kind": "custom",
+      "refersTo": "katori-check",
+      "description": "Multi-select menu row: a brass bowl that fills kesar with a tick when chosen.",
+      "html": "<label class=\"ds-dish\"><input type=\"checkbox\" checked><span class=\"ds-bowl\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg></span><span class=\"ds-dish-text\"><span class=\"ds-dish-name\">Live jalebi with rabdi</span><span class=\"ds-dish-desc\">Saffron jalebi fried live in desi ghee, over thick rabdi.</span></span></label>",
+      "css": ".ds-dish { display: flex; gap: 0.75rem; align-items: flex-start; padding: 1rem 0.75rem 1rem 0; border-bottom: 1px solid rgba(19, 36, 26, 0.16); cursor: pointer; font-family: var(--font); color: var(--ink, #13241a); } .ds-dish input { position: absolute; opacity: 0; width: 1px; height: 1px; } .ds-bowl { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; margin-top: 0.1rem; background: radial-gradient(circle at 60% 65%, #f2d184, #c99a45); box-shadow: inset 0 0 0 3px #e8c26a, inset 0 0 0 4px #8a5a14, 0 1px 2px rgba(0,0,0,.2); color: transparent; transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-dish input:checked + .ds-bowl { background: var(--kesar, #f08a24); color: var(--mehndi-950, #0c2218); transform: scale(1.08); box-shadow: inset 0 0 0 3px #f3d27a, inset 0 0 0 4px #8a5a14, 0 2px 4px rgba(0,0,0,.2); } .ds-dish input:focus-visible + .ds-bowl { outline: 3px solid var(--kesar-deep, #d9700f); outline-offset: 3px; } .ds-dish-text { display: grid; gap: 0.15rem; } .ds-dish-name { font-weight: 640; line-height: 1.3; transition: color 0.2s; } .ds-dish:hover .ds-dish-name { color: var(--brass-deep, #8a5a14); } .ds-dish-desc { font-size: 0.875rem; color: var(--ink-soft, #46574c); line-height: 1.45; }"
+    },
+    {
+      "name": "Site Header",
+      "kind": "nav",
+      "refersTo": "lang-switch-active",
+      "description": "Sticky mehndi header: brass thali mark, nav with brass hover rule, pill language switch, kesar CTA.",
+      "html": "<header class=\"ds-head\"><a class=\"ds-brand\" href=\"#\"><svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"19\" fill=\"#D9A441\"/><circle cx=\"20\" cy=\"20\" r=\"15.5\" fill=\"#E9BC5A\" stroke=\"#8A5A14\" stroke-width=\"1\"/><circle cx=\"20\" cy=\"9.5\" r=\"4\" fill=\"#E07A2E\"/><circle cx=\"29.5\" cy=\"16\" r=\"4\" fill=\"#5A2812\"/><circle cx=\"27\" cy=\"27.5\" r=\"4\" fill=\"#F08A24\"/><circle cx=\"13\" cy=\"27.5\" r=\"4\" fill=\"#2F7D3A\"/><circle cx=\"10.5\" cy=\"16\" r=\"4\" fill=\"#F8D36A\"/><circle cx=\"20\" cy=\"20\" r=\"4.5\" fill=\"#F8E7BE\"/></svg><span class=\"ds-brand-text\"><span class=\"ds-brand-name\">Kesariya</span><span class=\"ds-brand-sub\">Catering · Surat</span></span></a><nav class=\"ds-nav\"><a href=\"#\">Menu</a><a href=\"#\">Décor</a><a href=\"#\">Reviews</a></nav><div class=\"ds-lang\"><a href=\"#\" aria-current=\"true\">English</a><a href=\"#\" lang=\"gu\">ગુજરાતી</a><a href=\"#\" lang=\"hi\">हिन्दी</a></div></header>",
+      "css": ".ds-head { display: flex; align-items: center; gap: 1.5rem; min-height: 72px; padding: 0 1.5rem; background: color-mix(in srgb, #123426 94%, transparent); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid rgba(244, 245, 239, 0.18); color: var(--on-green, #f4f5ef); font-family: var(--font); } .ds-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; color: inherit; } .ds-brand-text { display: grid; line-height: 1.05; } .ds-brand-name { font-stretch: 120%; font-weight: 780; font-size: 1.35rem; letter-spacing: -0.01em; } .ds-brand-sub { font-size: 0.78rem; color: var(--on-green-soft, #bfd2c4); font-weight: 500; letter-spacing: 0.02em; } .ds-nav { display: flex; gap: 1.5rem; margin-left: auto; } .ds-nav a { text-decoration: none; font-weight: 520; color: var(--on-green-soft, #bfd2c4); padding: 0.4rem 0; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; } .ds-nav a:hover { color: var(--on-green, #f4f5ef); border-color: var(--brass, #d9a441); } .ds-nav a:focus-visible, .ds-lang a:focus-visible { outline: 3px solid var(--brass-light, #f3d27a); outline-offset: 3px; border-radius: 6px; } .ds-lang { display: flex; gap: 2px; padding: 3px; border-radius: 999px; border: 1px solid rgba(244, 245, 239, 0.18); } .ds-lang a { text-decoration: none; font-size: 0.85rem; padding: 0.25rem 0.6rem; border-radius: 999px; color: var(--on-green-soft, #bfd2c4); font-weight: 550; line-height: 1.5; } .ds-lang a:hover { color: var(--on-green, #f4f5ef); } .ds-lang a[aria-current='true'] { background: var(--brass, #d9a441); color: var(--mehndi-950, #0c2218); }"
+    },
+    {
+      "name": "Hero Quick-Inquiry Tray",
+      "kind": "card",
+      "refersTo": "quick-inquiry-tray",
+      "description": "Deep mehndi tray with a brass hairline and inset glint holding occasion, date, guests and the primary action.",
+      "html": "<form class=\"ds-tray\" onsubmit=\"return false\"><label class=\"ds-tf\"><span>Occasion</span><select><option>Wedding or reception</option></select></label><label class=\"ds-tf\"><span>Date</span><input type=\"date\"></label><label class=\"ds-tf\"><span>Guests</span><input type=\"number\" placeholder=\"e.g. 300\"></label><button class=\"ds-tray-go\">Plan my feast</button></form>",
+      "css": ".ds-tray { display: grid; grid-template-columns: 1.5fr 1.1fr 0.8fr; gap: 0.75rem; padding: 1rem; background: var(--mehndi-950, #0c2218); border: 1px solid rgba(217, 164, 65, 0.45); border-radius: 20px; box-shadow: inset 0 1px 0 rgba(243, 210, 122, 0.18), 0 6px 12px rgba(12, 34, 24, 0.14), 0 20px 48px rgba(12, 34, 24, 0.18); font-family: var(--font); } .ds-tf { display: grid; gap: 0.35rem; } .ds-tf > span { font-size: 0.875rem; font-weight: 600; color: var(--on-green-soft, #bfd2c4); } .ds-tf select, .ds-tf input { min-height: 48px; padding: 0.65rem 0.9rem; border-radius: 10px; border: 1.5px solid #c9cfbf; background: #fff; color: #13241a; font: inherit; } .ds-tf select:focus, .ds-tf input:focus { outline: none; border-color: #d9700f; box-shadow: 0 0 0 3px rgba(240, 138, 36, 0.28); } .ds-tray-go { grid-column: 1 / -1; min-height: 48px; border-radius: 999px; border: 0; background: var(--kesar, #f08a24); color: var(--mehndi-950, #0c2218); font: inherit; font-weight: 650; font-stretch: 108%; cursor: pointer; transition: background-color 0.2s; } .ds-tray-go:hover { background: var(--kesar-deep, #d9700f); } .ds-tray-go:focus-visible { outline: 3px solid var(--brass-light, #f3d27a); outline-offset: 3px; }"
+    },
+    {
+      "name": "Plan Panel",
+      "kind": "card",
+      "refersTo": "plan-panel",
+      "description": "White inquiry panel framed by a triple brass rim, like a thali around the form.",
+      "html": "<div class=\"ds-plan\"><h3>Plan your event</h3><p>Bharatbhai replies with a quote, usually the same day.</p></div>",
+      "css": ".ds-plan { background: #fff; border-radius: 22px; padding: clamp(1.25rem, 3vw, 2.5rem); box-shadow: 0 0 0 1.5px #d9a441, 0 0 0 6px #f0e2b8, 0 0 0 7.5px #8a5a14, 0 6px 12px rgba(12, 34, 24, 0.14), 0 20px 48px rgba(12, 34, 24, 0.18); font-family: var(--font); color: var(--ink, #13241a); } .ds-plan h3 { margin: 0; font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem); font-weight: 760; font-stretch: 116%; line-height: 1.02; letter-spacing: -0.02em; } .ds-plan p { margin: 0.75rem 0 0; color: var(--ink-soft, #46574c); }"
+    },
+    {
+      "name": "Plate Label",
+      "kind": "chip",
+      "refersTo": "plate-label",
+      "description": "Deep mehndi pill ringed in brass that names a katori on the hero thali.",
+      "html": "<span class=\"ds-plate-label\">Chaat counter</span>",
+      "css": ".ds-plate-label { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 999px; white-space: nowrap; background: var(--mehndi-950, #0c2218); color: var(--on-green, #f4f5ef); font-family: var(--font); font-size: 0.85rem; font-weight: 620; font-stretch: 106%; line-height: 1.5; box-shadow: 0 0 0 1.5px var(--brass, #d9a441), 0 2px 6px rgba(12, 34, 24, 0.35); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Brass Thali",
+    "overview": "**Creative North Star: \"The Brass Thali\"**\n\nThe whole system is a Gujarati wedding thali seen from above. A hammered brass plate sits on a deep mehndi-green cloth; around its rim, round katoris hold the courses, and every service Kesariya sells (food, live counters, drinks, decor) is one bowl on that plate. Planning an event means filling the plate. The plate is drawn in code as a single SVG and appears twice on the public page: full and labelled in the hero, empty and filling in the \"Build your thali\" section, where each pick ladles food into its katori.\n\nAround the plate, the page is a sequence of full-bleed coloured grounds taken from a Gujarati ceremony: mehndi green for arrival, decor and the footer; a haldi-yellow field for the dietary promise; chaas (buttermilk) white for reading and choosing; one kumkum-red band for the clients' own words. Brass is the frame material: rims, rings, rules and the active state of small controls. Kesar orange is reserved for the action a visitor takes. Type is one family, Anek, across Latin, Gujarati and Devanagari, set wide and heavy for display and plain for reading, so English, Gujarati and Hindi pages look like one house.\n\nThe density is warm but legible: large text and 44 to 48px tap targets for older family members on mid-range phones, generous band padding, and lists set as ruled rows rather than boxed cards. The owner portal (Operate mode) carries the same palette at work density: a mehndi bar, chaas ground, white ruled lead rows, a kesar count on the leads that need a call back. The old dark-gold \"royal\" site, with a photo hero, centred headline and a row of service cards, is the confirmed rejection this world replaced.",
+    "keyCharacteristics": [
+      "One drawn brass thali as the signature object; round katoris as the unit of choice.",
+      "Full-bleed coloured grounds per band (mehndi, haldi, chaas, kumkum), never a page of white cards.",
+      "Brass for frames and rings, kesar for actions and selections, chilli for warnings and \"Live\".",
+      "One type family (Anek) for three scripts; wide and heavy display, upright regular body.",
+      "Ruled rows and dashed photo slots instead of card grids and stock imagery.",
+      "Pill buttons and round selections; no sharp corners on anything a visitor touches."
+    ],
+    "rules": [
+      {
+        "name": "The One Ground Per Band Rule",
+        "body": "Every full-width band owns exactly one ground colour (mehndi, haldi, chaas, chaas deep, kumkum) and runs edge to edge. Sections are separated by a change of ground, not by boxes or shadows.",
+        "section": "colors"
+      },
+      {
+        "name": "The Kumkum Once Rule",
+        "body": "Kumkum red is the ground of the reviews band and appears nowhere else on a surface. Its rarity marks the clients' own words.",
+        "section": "colors"
+      },
+      {
+        "name": "The Kesar Means Act Rule",
+        "body": "Kesar orange fills only things a visitor acts on or has chosen: primary buttons, checked bowls, checked themes, the new-leads count. Kesar is never used as decoration in interface chrome; brass carries decoration. (Inside the drawn thali and brand mark, kesar is food colour, not chrome.)",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Anek is the only typeface, in all three scripts. A second display face, or a system font for headings, breaks the one-house reading of the three languages.",
+        "section": "typography"
+      },
+      {
+        "name": "The Script Relaxation Rule",
+        "body": "On `:lang(gu)` and `:lang(hi)` pages headings drop to width 108%, line-height 1.22 and zero tracking, and body line-height rises to 1.75, so matras and conjuncts never collide.",
+        "section": "typography"
+      },
+      {
+        "name": "The Brass Rim Rule",
+        "body": "A container that holds the inquiry is framed like a plate: brass rings drawn with stacked spread shadows or a brass hairline, then one soft green-tinted lift. No other cards are elevated.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Flat Ground Rule",
+        "body": "Bands, rows and lists sit flat on their ground. Shadows appear only on the brass objects, the inquiry containers, floating menus and as a hover response on the primary button.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Katori Rule",
+        "body": "A choice is a round bowl. Multi-select items show a brass katori that fills with kesar and a tick when chosen; single-select options are pills or a circular tick ring. Square checkboxes are not part of this world.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do give every band one full-bleed ground from the palette (mehndi, haldi, chaas, chaas deep, kumkum) and divide sections by changing ground.",
+      "Do keep kesar orange (#f08a24) for actions and chosen states, and use brass (#d9a441 family) for frames, rings, rules and active small controls.",
+      "Do set every headline in Anek at width 116%, weight 760, and relax headings to width 108% and line-height 1.22 on Gujarati and Hindi pages.",
+      "Do make tap targets at least 44px (48px for buttons and fields) and keep body text at 1.0625rem or larger.",
+      "Do present choices as round katoris or pills, and lists as ruled rows on a hairline.",
+      "Do tint every shadow with Deep Mehndi (rgba(12, 34, 24, …)) and frame inquiry containers with brass rings.",
+      "Do draw imagery in SVG from the thali vocabulary, and mark missing photos as dashed brass slots that say a real photo is coming.",
+      "Do honour `prefers-reduced-motion`: the plate settle and ladle-in become a fade or nothing."
+    ],
+    "donts": [
+      "Don't rebuild the old \"royal\" pattern: a dark-gold photo hero with a centred headline over a row of service cards.",
+      "Don't use kumkum red (#6e1a12) as a ground anywhere but the reviews band.",
+      "Don't put stock or borrowed photos in a photo slot, or pass placeholder art off as a Kesariya event.",
+      "Don't introduce a second typeface or a system font for headings.",
+      "Don't use square checkboxes, sharp-cornered buttons or grey card borders on public surfaces.",
+      "Don't use neutral black shadows or elevate ordinary rows and lists."
+    ]
+  }
+}

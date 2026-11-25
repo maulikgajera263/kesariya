@@ -1,0 +1,776 @@
+---
+import Site from '../layouts/Site.astro';
+import Thali from './Thali.astro';
+import Icon from './Icon.astro';
+import { t, LANGS } from '../i18n';
+import { MENU, ALL_ITEMS, type Lang } from '../data/menu';
+import { SITE, OCCASIONS, AREAS, SERVICES, waLink } from '../data/site';
+import { REVIEWS } from '../data/reviews';
+import { KATORIS } from '../data/thali';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const home = LANGS.find((l) => l.id === lang)!.href;
+
+const q = Astro.url.searchParams;
+const pre = {
+  occasion: (OCCASIONS as readonly string[]).includes(q.get('occasion') || '') ? q.get('occasion')! : '',
+  date: /^\d{4}-\d{2}-\d{2}$/.test(q.get('date') || '') ? q.get('date')! : '',
+  guests: /^\d{1,4}$/.test(q.get('guests') || '') ? q.get('guests')! : '',
+};
+const sentRef = /^KES-\d{6}$/.test(q.get('sent') || '') ? q.get('sent')! : '';
+const errorKeys = (q.get('error') || '').split(',').filter((k) => k in d.form.errors);
+const today = new Date().toISOString().slice(0, 10);
+
+const decorGroup = MENU.find((g) => g.id === 'decor')!;
+const foodGroups = MENU.filter((g) => g.id !== 'decor');
+
+const pageData = {
+  lang,
+  names: Object.fromEntries(ALL_ITEMS.map((i) => [i.id, i.name[lang]])),
+  katori: Object.fromEntries(ALL_ITEMS.map((i) => [i.id, i.katori])),
+  chosen: Array.from({ length: 41 }, (_, n) => d.build.chosen(n)),
+  empty: d.build.empty,
+  none: d.form.thaliNone,
+  errors: d.form.errors,
+  sending: d.form.sending,
+  submit: d.form.submit,
+  sentBody: d.form.sent.body('{ref}'),
+  occ: d.occasion,
+  wa: d.wa,
+  waNumber: SITE.whatsapp,
+};
+const err = (k: string) => errorKeys.includes(k);
+---
+<Site lang={lang}>
+  <!-- HERO: the whole offer on one plate, with the inquiry already open -->
+  <section class="hero on-green" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">{d.hero.h1}</h1>
+        <p class="hero-sub">{d.hero.sub}</p>
+        <ul class="promise" role="list">
+          {d.hero.promise.map((p) => <li><Icon name="check" size={18} />{p}</li>)}
+        </ul>
+
+        <form class="quick" action={`${home}#plan`} method="get" data-quick>
+          <label class="field">
+            <span>{d.hero.occasion}</span>
+            <select class="input" name="occasion">
+              {OCCASIONS.map((o) => <option value={o} selected={pre.occasion === o}>{d.occasion[o]}</option>)}
+            </select>
+          </label>
+          <label class="field">
+            <span>{d.hero.date}</span>
+            <input class="input" type="date" name="date" min={today} value={pre.date} />
+          </label>
+          <label class="field">
+            <span>{d.hero.guests}</span>
+            <input class="input num" type="number" name="guests" min="10" max="5000" inputmode="numeric" placeholder={d.hero.guestsPh} value={pre.guests} />
+          </label>
+          <button class="btn btn-primary quick-go" type="submit">{d.hero.submit} <Icon name="arrow" size={18} /></button>
+        </form>
+        <p class="hero-wa">
+          <a href={waLink(d.wa.hello)} target="_blank" rel="noopener" data-wa><Icon name="message" size={18} /> {d.hero.whatsapp}</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href={`tel:${SITE.phoneTel}`} class="num"><Icon name="phone" size={18} /> {SITE.phoneDisplay}</a>
+        </p>
+      </div>
+      <div class="hero-plate">
+        <div class="plate-wrap">
+          <Thali uid="hero" label={d.hero.thaliLabel} />
+          <ul class="plate-key" role="list" aria-hidden="true">
+            {KATORIS.map((k) => (
+              <li data-k={k.id} style={`left:${(k.x / 6.4).toFixed(2)}%;top:${((k.y + 62) / 6.4).toFixed(2)}%`}>{d.hero.katori[k.id]}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIET: the reason families choose Kesariya, stated plainly -->
+  <section class="diet" aria-labelledby="diet-title">
+    <div class="wrap diet-grid">
+      <div>
+        <h2 id="diet-title">{d.diet.h2}</h2>
+        <p class="lead">{d.diet.lead}</p>
+      </div>
+      <dl class="diet-list">
+        {d.diet.items.map((it) => (
+          <div>
+            <dt>{it.t}</dt>
+            <dd>{it.d}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- BUILD YOUR THALI: the menu, as the plate you fill -->
+  <section class="build" id="menu" aria-labelledby="build-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 id="build-title">{d.build.h2}</h2>
+        <p>{d.build.sub}</p>
+      </header>
+      <div class="build-grid">
+        <div class="groups">
+          {foodGroups.map((g) => (
+            <fieldset class="group">
+              <legend><span class="g-title">{g.title[lang]}</span><span class="g-note">{g.note[lang]}</span></legend>
+              <div class="dishes">
+                {g.items.map((it) => (
+                  <label class="dish">
+                    <input type="checkbox" name="thali" value={it.id} form="plan-form" />
+                    <span class="bowl" aria-hidden="true"><Icon name="check" size={16} /></span>
+                    <span class="dish-text">
+                      <span class="dish-name">
+                        {it.name[lang]}
+                        {it.live && <span class="live"><Icon name="flame" size={14} />{d.build.live}</span>}
+                      </span>
+                      <span class="dish-desc">{it.desc[lang]}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+        <aside class="build-plate" aria-live="polite">
+          <div class="bp-inner">
+            <div class="bp-thali"><Thali uid="build" mode="build" label={d.build.thaliLabel} /></div>
+            <div class="bp-meta">
+              <p class="bp-count" data-count>{d.build.empty}</p>
+              <div class="bp-actions">
+                <a class="btn btn-ink" href="#plan">{d.build.send} <Icon name="arrow" size={18} /></a>
+                <button class="bp-clear" type="button" data-clear hidden>{d.build.clear}</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECOR: same team, same plate -->
+  <section class="decor on-green" id="decor" aria-labelledby="decor-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 id="decor-title">{d.decor.h2}</h2>
+        <p>{d.decor.sub}</p>
+      </header>
+      <fieldset class="themes">
+        <legend class="visually-hidden">{decorGroup.title[lang]}</legend>
+        {decorGroup.items.map((it, i) => (
+          <label class:list={['theme', i === 0 && 'theme-lead']}>
+            <input type="radio" name="thali" value={it.id} form="plan-form" class="visually-hidden" />
+            <span class="photo-slot" data-photo={it.id}>
+              <svg viewBox="0 0 48 48" aria-hidden="true" class="slot-mark">
+                <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4" />
+                <circle cx="24" cy="24" r="7" fill="currentColor" />
+                {[0, 1, 2, 3, 4, 5, 6, 7].map((k) => <circle cx={24 + 13 * Math.cos((k * Math.PI) / 4)} cy={24 + 13 * Math.sin((k * Math.PI) / 4)} r="4" fill="currentColor" opacity=".6" />)}
+              </svg>
+              <span class="slot-text">{d.decor.photoSoon}</span>
+            </span>
+            <span class="theme-text">
+              <span class="theme-name">{it.name[lang]}<span class="theme-pick" aria-hidden="true"><Icon name="check" size={16} /></span></span>
+              <span class="theme-desc">{it.desc[lang]}</span>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- OCCASIONS -->
+  <section class="occasions" id="occasions" aria-labelledby="occ-title">
+    <div class="wrap">
+      <h2 id="occ-title">{d.occasions.h2}</h2>
+      <ul class="occ-list" role="list">
+        {d.occasions.items.map((o) => (
+          <li>
+            <h3>{o.t}</h3>
+            <p>{o.d}</p>
+            <a href={`${home}?occasion=${o.id}#plan`} data-occasion={o.id}>{d.occasions.plan} <Icon name="arrow" size={18} /></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- REVIEWS: real clients, in their own words -->
+  <section class="reviews on-dark" id="reviews" aria-labelledby="rev-title">
+    <div class="wrap">
+      <h2 id="rev-title">{d.reviews.h2}</h2>
+      <div class="rev-grid">
+        {REVIEWS.map((r) => (
+          <figure lang="en">
+            <blockquote><p>{r.quote}</p></blockquote>
+            <figcaption><strong>{r.name}</strong><span>{r.event}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT + INQUIRY -->
+  <section class="contact" id="contact" aria-labelledby="founder-title">
+    <div class="wrap contact-grid">
+      <div class="founder">
+        <h2 id="founder-title">{d.founder.h2}</h2>
+        <p>{d.founder.p}</p>
+        <div class="founder-card">
+          <p class="founder-name">{SITE.owner}</p>
+          <a class="founder-phone num" href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a>
+          <div class="founder-actions">
+            <a class="btn btn-ink" href={`tel:${SITE.phoneTel}`}><Icon name="phone" size={18} /> {d.founder.call}</a>
+            <a class="btn btn-ghost" href={waLink(d.wa.hello)} target="_blank" rel="noopener" data-wa><Icon name="message" size={18} /> {d.founder.whatsapp}</a>
+          </div>
+          <a class="founder-addr" href={SITE.mapUrl} target="_blank" rel="noopener"><Icon name="pin" size={18} /> <span>{SITE.address}<br /><u>{d.founder.map}</u></span></a>
+        </div>
+      </div>
+
+      <div class="plan" id="plan">
+        <div class="plan-panel" data-plan>
+          <div class="sent" data-sent hidden={!sentRef} role="status" tabindex="-1">
+            <svg viewBox="0 0 64 64" class="sent-mark" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" fill="#D9A441" /><circle cx="32" cy="32" r="24" fill="#2F7D3A" />
+              <path d="M21 33l8 8 15-17" fill="none" stroke="#F4F5EF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <h3>{d.form.sent.title}</h3>
+            <p data-sent-body>{sentRef ? d.form.sent.body(sentRef) : ''}</p>
+            <a class="btn btn-primary" target="_blank" rel="noopener" data-sent-wa
+              href={waLink(`${d.wa.hello}\n${d.wa.ref}: ${sentRef}`)}><Icon name="message" size={18} /> {d.form.sent.wa}</a>
+          </div>
+
+          <form id="plan-form" class="plan-form" action="/api/inquiries" method="post" novalidate hidden={!!sentRef} data-form>
+            <h2>{d.form.h2}</h2>
+            <p class="plan-sub">{d.form.sub}</p>
+            <input type="hidden" name="lang" value={lang} />
+            <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+            {errorKeys.length > 0 && (
+              <p class="form-alert" role="alert">{errorKeys.map((k) => d.form.errors[k as keyof typeof d.form.errors]).join(' ')}</p>
+            )}
+            <p class="form-alert" role="alert" data-alert hidden></p>
+
+            <div class="fields">
+              <label class="field span-2">
+                <span>{d.form.name}</span>
+                <input class="input" name="name" autocomplete="name" required maxlength="80" aria-invalid={err('name') ? 'true' : undefined} />
+                <small class="field-error" data-err="name" hidden>{d.form.errors.name}</small>
+              </label>
+              <label class="field span-2">
+                <span>{d.form.phone}</span>
+                <input class="input num" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" placeholder="98250 12345" aria-invalid={err('phone') ? 'true' : undefined} />
+                <small class="field-error" data-err="phone" hidden>{d.form.errors.phone}</small>
+              </label>
+              <label class="field">
+                <span>{d.form.occasion}</span>
+                <select class="input" name="occasion">
+                  {OCCASIONS.map((o) => <option value={o} selected={pre.occasion === o}>{d.occasion[o]}</option>)}
+                </select>
+              </label>
+              <label class="field">
+                <span>{d.form.date} <small>({d.form.optional})</small></span>
+                <input class="input" type="date" name="date" min={today} value={pre.date} />
+                <small class="field-error" data-err="date" hidden>{d.form.errors.date}</small>
+              </label>
+              <label class="field">
+                <span>{d.form.guests} <small>({d.form.optional})</small></span>
+                <input class="input num" type="number" name="guests" min="10" max="5000" inputmode="numeric" value={pre.guests} />
+                <small class="field-error" data-err="guests" hidden>{d.form.errors.guests}</small>
+              </label>
+              <label class="field">
+                <span>{d.form.area} <small>({d.form.optional})</small></span>
+                <select class="input" name="area">
+                  <option value="">{d.form.areaPick}</option>
+                  {AREAS.map((a) => <option value={a}>{a}</option>)}
+                </select>
+              </label>
+              <fieldset class="field span-2 services">
+                <legend class="label">{d.form.service}</legend>
+                <div class="svc-row">
+                  {SERVICES.map((s, i) => (
+                    <label class="svc"><input type="radio" name="service" value={s} checked={i === 0} /><span>{d.form.services[s]}</span></label>
+                  ))}
+                </div>
+              </fieldset>
+              <div class="span-2 thali-sum">
+                <p class="label">{d.form.thaliTitle}</p>
+                <p class="sum-list" data-summary>{d.form.thaliNone}</p>
+                <a href="#menu" class="sum-edit">{d.form.editThali}</a>
+              </div>
+              <label class="field span-2">
+                <span>{d.form.notes} <small>({d.form.optional})</small></span>
+                <textarea class="input" name="notes" maxlength="1000" placeholder={d.form.notesPh}></textarea>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit" data-submit>{d.form.submit} <Icon name="arrow" size={18} /></button>
+              <a class="wa-alt" href={waLink(d.wa.hello)} target="_blank" rel="noopener" data-wa><Icon name="message" size={18} /> {d.form.orWa}</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/json" id="page-data" set:html={JSON.stringify(pageData)} />
+</Site>
+
+<script>
+  type PageData = {
+    lang: string; names: Record<string, string>; katori: Record<string, string>; chosen: string[];
+    empty: string; none: string; errors: Record<string, string>; sending: string; submit: string;
+    sentBody: string; occ: Record<string, string>; wa: Record<string, string>; waNumber: string;
+  };
+  const data: PageData = JSON.parse(document.getElementById('page-data')!.textContent || '{}');
+  const form = document.querySelector<HTMLFormElement>('[data-form]')!;
+  const picks = () => Array.from(document.querySelectorAll<HTMLInputElement>('input[name="thali"]'));
+  const chosen = () => picks().filter((i) => i.checked).map((i) => i.value);
+  const wa = (text: string) => `https://wa.me/${data.waNumber}?text=${encodeURIComponent(text)}`;
+
+  function message(ref?: string) {
+    const f = new FormData(form);
+    const lines = [data.wa.hello];
+    const name = String(f.get('name') || '').trim();
+    if (name) lines.push(`${data.wa.name}: ${name}`);
+    const occ = String(f.get('occasion') || '');
+    if (occ) lines.push(`${data.wa.occasion}: ${data.occ[occ] || occ}`);
+    if (f.get('date')) lines.push(`${data.wa.date}: ${f.get('date')}`);
+    if (f.get('guests')) lines.push(`${data.wa.guests}: ${f.get('guests')}`);
+    const dishes = chosen().map((id) => data.names[id]);
+    if (dishes.length) lines.push(`${data.wa.thali}: ${dishes.join(', ')}`);
+    if (ref) lines.push(`${data.wa.ref}: ${ref}`);
+    return lines.join('\n');
+  }
+
+  function refresh() {
+    const ids = chosen();
+    const filled = new Set(ids.map((id) => data.katori[id]));
+    document.querySelectorAll<SVGGElement>('.thali[data-mode="build"] .katori').forEach((k) => {
+      k.classList.toggle('is-filled', filled.has(k.dataset.katori || ''));
+    });
+    const count = document.querySelector('[data-count]')!;
+    count.textContent = ids.length ? data.chosen[Math.min(ids.length, 40)] : data.empty;
+    const clear = document.querySelector<HTMLButtonElement>('[data-clear]')!;
+    clear.hidden = ids.length === 0;
+    const summary = document.querySelector('[data-summary]')!;
+    summary.textContent = ids.length ? ids.map((id) => data.names[id]).join(' · ') : data.none;
+    document.querySelectorAll<HTMLAnchorElement>('[data-wa]').forEach((a) => (a.href = wa(message())));
+  }
+
+  document.addEventListener('change', (e) => {
+    const el = e.target as HTMLInputElement;
+    if (el.name === 'thali' || el.form === form) refresh();
+  });
+  form.addEventListener('input', () => document.querySelectorAll<HTMLAnchorElement>('[data-wa]').forEach((a) => (a.href = wa(message()))));
+  document.querySelector('[data-clear]')!.addEventListener('click', () => {
+    picks().forEach((i) => (i.checked = false));
+    refresh();
+  });
+
+  // Occasion links and the hero strip fill the main form instead of reloading.
+  function prefill(values: Record<string, string>) {
+    for (const [k, v] of Object.entries(values)) {
+      const el = form.elements.namedItem(k) as HTMLInputElement | null;
+      if (el && v) el.value = v;
+    }
+    refresh();
+    document.getElementById('plan')!.scrollIntoView({ block: 'start' });
+    (form.elements.namedItem('name') as HTMLInputElement).focus({ preventScroll: true });
+  }
+  document.querySelector<HTMLFormElement>('[data-quick]')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target as HTMLFormElement);
+    prefill(Object.fromEntries(Array.from(f.entries()).map(([k, v]) => [k, String(v)])));
+  });
+  document.querySelectorAll<HTMLAnchorElement>('[data-occasion]').forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      prefill({ occasion: a.dataset.occasion || '' });
+    }),
+  );
+
+  function validate() {
+    const f = new FormData(form);
+    const bad: string[] = [];
+    if (String(f.get('name') || '').trim().length < 2) bad.push('name');
+    const digits = String(f.get('phone') || '').replace(/\D/g, '');
+    if (digits.length < 10 || digits.length > 15) bad.push('phone');
+    const g = String(f.get('guests') || '');
+    if (g && (+g < 10 || +g > 5000)) bad.push('guests');
+    return bad;
+  }
+  function showErrors(bad: string[]) {
+    form.querySelectorAll<HTMLElement>('[data-err]').forEach((el) => {
+      const on = bad.includes(el.dataset.err || '');
+      el.hidden = !on;
+      const input = form.elements.namedItem(el.dataset.err || '') as HTMLInputElement | null;
+      if (input) input.toggleAttribute('aria-invalid', on);
+      if (input && on) input.setAttribute('aria-invalid', 'true');
+    });
+    if (bad.length) (form.elements.namedItem(bad[0]) as HTMLInputElement)?.focus();
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const alert = form.querySelector<HTMLElement>('[data-alert]')!;
+    alert.hidden = true;
+    const bad = validate();
+    showErrors(bad);
+    if (bad.length) return;
+    const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    btn.disabled = true;
+    btn.textContent = data.sending;
+    const f = new FormData(form);
+    const body: Record<string, unknown> = Object.fromEntries(f.entries());
+    body.thali = chosen();
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (res.status === 422 && out.errors) { showErrors(Object.keys(out.errors)); throw 0; }
+      if (!res.ok) { alert.textContent = res.status === 429 ? data.errors.rate : data.errors.generic; alert.hidden = false; throw 0; }
+      const sent = document.querySelector<HTMLElement>('[data-sent]')!;
+      sent.querySelector('[data-sent-body]')!.textContent = data.sentBody.replace('{ref}', out.ref);
+      sent.querySelector<HTMLAnchorElement>('[data-sent-wa]')!.href = wa(message(out.ref));
+      form.hidden = true;
+      sent.hidden = false;
+      sent.focus();
+    } catch (err) {
+      if (err !== 0) { alert.textContent = data.errors.generic; alert.hidden = false; }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = data.submit;
+    }
+  });
+
+  refresh();
+</script>
+
+<style>
+  /* ---------- HERO ---------- */
+  .hero {
+    background:
+      radial-gradient(ellipse 60% 70% at 78% 52%, rgba(243, 210, 122, 0.14), transparent 70%),
+      var(--mehndi-900);
+    color: var(--on-green);
+    overflow: clip;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
+    gap: var(--s-6);
+    min-height: min(820px, calc(100svh - 72px));
+    padding-block: var(--s-7);
+  }
+  .hero h1 { font-size: var(--step-4); color: #fff; max-width: 13ch; }
+  :is(:lang(gu), :lang(hi)) .hero h1 { max-width: 13ch; }
+  .hero-sub { margin-top: var(--s-5); font-size: var(--step-1); color: var(--on-green-soft); max-width: 36ch; line-height: 1.5; }
+  .promise { list-style: none; padding: 0; margin: var(--s-5) 0 0; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
+  .promise li { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; color: var(--haldi-soft); }
+
+  .quick {
+    margin-top: var(--s-6);
+    display: grid;
+    grid-template-columns: 1.5fr 1.1fr 0.8fr;
+    gap: var(--s-3);
+    padding: var(--s-4);
+    background: var(--mehndi-950);
+    border: 1px solid rgba(217, 164, 65, 0.45);
+    border-radius: 20px;
+    box-shadow: inset 0 1px 0 rgba(243, 210, 122, 0.18), var(--shadow-2);
+  }
+  .quick .field > span { color: var(--on-green-soft); }
+  .quick-go { grid-column: 1 / -1; }
+  .hero-wa { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); align-items: center; color: var(--on-green-soft); }
+  .hero-wa a { display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; font-weight: 560; color: var(--on-green); }
+  @media (max-width: 520px) { .hero-wa .sep { display: none; } }
+  .hero-wa a:hover { color: var(--brass-light); text-decoration: underline; }
+
+  .hero-plate { position: relative; margin-right: calc(-1 * var(--s-6)); }
+  .plate-wrap { position: relative; width: min(100%, 680px); margin-inline: auto; animation: settle 1.4s var(--ease-out) both; }
+  .plate-key { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; pointer-events: none; }
+  .plate-key li {
+    position: absolute; translate: -50% -50%;
+    padding: 0.1rem 0.6rem; border-radius: 999px; white-space: nowrap;
+    background: var(--mehndi-950); color: var(--on-green);
+    font-size: clamp(0.7rem, 0.55rem + 0.35vw, 0.85rem); font-weight: 620; font-stretch: 106%; line-height: 1.5;
+    box-shadow: 0 0 0 1.5px var(--brass), 0 2px 6px rgba(12, 34, 24, 0.35);
+  }
+  @keyframes settle {
+    from { transform: rotate(-14deg) scale(0.94); }
+    to { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .plate-wrap { animation: none; } }
+
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; min-height: 0; padding-block: var(--s-5) var(--s-7); gap: 0; position: relative; }
+    .hero-sub { margin-top: var(--s-4); }
+    .promise { margin-top: var(--s-4); gap: var(--s-1) var(--s-4); max-width: 64%; }
+    .quick { margin-top: var(--s-5); }
+    .hero h1 { max-width: 14ch; position: relative; z-index: 1; }
+    .hero-copy { display: contents; }
+    .hero-copy > * { position: relative; z-index: 1; }
+    .hero-sub { max-width: 58%; font-size: var(--step-0); }
+    /* The plate rises in from the right edge as a half-plate beside the intro. */
+    .hero-plate {
+      position: absolute; z-index: 0; margin: 0;
+      width: min(64vw, 380px);
+      right: calc(-1 * var(--gutter) - min(26vw, 150px));
+      top: calc(var(--s-5) + 8.5rem);
+    }
+    .plate-wrap { width: 100%; }
+    /* Bowls on the right half fall outside the cropped half-plate: no clipped labels. */
+    .plate-key li:is([data-k='dal'], [data-k='chaat'], [data-k='global']) { display: none; }
+  }
+  @media (min-width: 600px) and (max-width: 920px) {
+    .hero-plate { top: var(--s-5); right: calc(-1 * var(--gutter) - 90px); width: 360px; }
+    .hero-sub { max-width: 52%; }
+    .promise, .quick, .hero-wa { max-width: 62%; }
+  }
+  @media (max-width: 520px) {
+    .quick { grid-template-columns: 1fr 1fr; }
+    .quick .field:first-child { grid-column: 1 / -1; }
+  }
+
+  /* ---------- DIET (haldi field) ---------- */
+  .diet { background: var(--haldi); color: var(--mehndi-950); padding-block: var(--s-9); }
+  .diet-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--s-8); align-items: start; }
+  .diet h2 { font-size: var(--step-3); max-width: 14ch; }
+  .lead { margin-top: var(--s-5); font-size: var(--step-1); max-width: 34ch; color: #3b2a05; }
+  .diet-list { margin: 0; display: grid; }
+  .diet-list > div { display: grid; grid-template-columns: 13rem 1fr; gap: var(--s-5); padding-block: var(--s-5); border-top: 2px solid rgba(12, 34, 24, 0.85); }
+  .diet-list > div:last-child { border-bottom: 2px solid rgba(12, 34, 24, 0.85); }
+  .diet-list dt { font-stretch: 116%; font-weight: 760; font-size: var(--step-2); line-height: 1.1; }
+  .diet-list dd { margin: 0; color: #3b2a05; padding-top: 0.2rem; }
+  @media (max-width: 860px) {
+    .diet { padding-block: var(--s-8); }
+    .diet-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+    .diet-list > div { grid-template-columns: 1fr; gap: var(--s-1); }
+  }
+
+  /* ---------- BUILD ---------- */
+  .build { padding-block: var(--s-9); }
+  .sec-head { max-width: 46rem; margin-bottom: var(--s-7); }
+  .sec-head h2 { font-size: var(--step-3); }
+  .sec-head p { margin-top: var(--s-4); font-size: var(--step-1); color: var(--ink-soft); }
+  .build-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: var(--s-7); align-items: start; }
+  .groups { display: grid; gap: var(--s-6); }
+  .group { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .group legend { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem; padding: 0; margin-bottom: var(--s-3); }
+  .g-title { font-stretch: 116%; font-weight: 740; font-size: var(--step-2); line-height: 1.2; }
+  .g-note { color: var(--ink-soft); font-size: var(--step--1); }
+  .dishes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+  .dish {
+    display: flex; gap: var(--s-3); align-items: flex-start;
+    padding: var(--s-4) var(--s-3) var(--s-4) 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .dish:nth-child(odd) { padding-right: var(--s-5); }
+  .dish:hover .dish-name { color: var(--brass-deep); }
+  .dish input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .bowl {
+    flex: none; width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center; margin-top: 0.1rem;
+    background: radial-gradient(circle at 60% 65%, #f2d184, #c99a45);
+    box-shadow: inset 0 0 0 3px #e8c26a, inset 0 0 0 4px #8a5a14, 0 1px 2px rgba(0,0,0,.2);
+    color: transparent;
+    transition: background 0.3s var(--ease-out), color 0.2s, transform 0.3s var(--ease-out);
+  }
+  .dish input:checked + .bowl {
+    background: var(--kesar);
+    color: var(--mehndi-950);
+    transform: scale(1.08);
+    box-shadow: inset 0 0 0 3px #f3d27a, inset 0 0 0 4px #8a5a14, 0 2px 4px rgba(0,0,0,.2);
+  }
+  .dish input:focus-visible + .bowl { outline: 3px solid var(--kesar-deep); outline-offset: 3px; }
+  .dish-text { display: grid; gap: 0.15rem; min-width: 0; }
+  .dish-name { font-weight: 640; line-height: 1.3; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: center; transition: color 0.2s; }
+  .dish-desc { font-size: var(--step--1); color: var(--ink-soft); line-height: 1.45; }
+  .live {
+    display: inline-flex; align-items: center; gap: 0.2rem;
+    font-size: 0.75rem; font-weight: 650; color: var(--chilli);
+    border: 1px solid currentColor; border-radius: 999px; padding: 0 0.45rem 0 0.3rem; line-height: 1.5;
+  }
+
+  .build-plate { position: sticky; top: 92px; }
+  .bp-inner { display: grid; gap: var(--s-5); justify-items: center; text-align: center; }
+  .bp-thali { width: 100%; max-width: 440px; }
+  .bp-count { font-weight: 600; color: var(--ink-soft); min-height: 1.6em; }
+  .bp-actions { display: grid; gap: var(--s-2); justify-items: center; }
+  .bp-clear { background: none; border: 0; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; padding: 0.4rem; min-height: 40px; }
+  .bp-clear:hover { color: var(--ink); }
+
+  @media (max-width: 920px) {
+    .build { padding-block: var(--s-8); }
+    .build-grid { grid-template-columns: 1fr; gap: 0; }
+    .build-plate {
+      order: -1; top: 72px; z-index: 5;
+      margin-inline: calc(-1 * var(--gutter));
+      padding: var(--s-2) var(--gutter);
+      background: color-mix(in srgb, var(--chaas) 94%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: var(--s-5);
+    }
+    .bp-inner { grid-template-columns: 96px 1fr; justify-items: start; text-align: left; gap: var(--s-4); align-items: center; }
+    .bp-thali { max-width: 96px; }
+    .bp-meta { display: grid; gap: var(--s-2); }
+    .bp-actions { display: flex; align-items: center; justify-items: start; gap: var(--s-3); }
+    .bp-actions .btn { min-height: 42px; padding: 0.45rem 1rem; font-size: 0.95rem; }
+    .bp-count { font-size: var(--step--1); min-height: 0; }
+  }
+  @media (max-width: 600px) {
+    .dishes { grid-template-columns: 1fr; }
+    .dish:nth-child(odd) { padding-right: var(--s-3); }
+  }
+
+  /* ---------- DECOR ---------- */
+  .decor { background: var(--mehndi-800); color: var(--on-green); padding-block: var(--s-9); }
+  .decor .sec-head p { color: var(--on-green-soft); }
+  .themes {
+    border: 0; padding: 0; margin: 0; min-width: 0;
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; gap: var(--s-5);
+  }
+  .theme { display: grid; gap: var(--s-3); cursor: pointer; align-content: start; }
+  .theme-lead { grid-row: span 2; }
+  .theme:last-child { grid-column: 2 / 4; }
+  .theme:last-child .photo-slot { aspect-ratio: 21 / 9; }
+  .photo-slot {
+    display: grid; place-items: center; align-content: center; gap: var(--s-3);
+    aspect-ratio: 4 / 3; border-radius: var(--radius);
+    background:
+      repeating-linear-gradient(135deg, rgba(243, 210, 122, 0.05) 0 12px, transparent 12px 24px),
+      var(--mehndi-900);
+    border: 1.5px dashed rgba(217, 164, 65, 0.55);
+    color: var(--brass);
+    padding: var(--s-5); text-align: center;
+    transition: border-color 0.25s, box-shadow 0.3s var(--ease-out);
+  }
+  .theme-lead .photo-slot { aspect-ratio: auto; min-height: 100%; height: clamp(280px, 38vw, 520px); }
+  .slot-mark { width: 56px; height: 56px; }
+  .slot-text { font-size: var(--step--1); color: var(--on-green-soft); max-width: 22ch; }
+  .theme-text { display: grid; gap: 0.2rem; }
+  .theme-name { display: flex; align-items: center; gap: 0.5rem; font-stretch: 114%; font-weight: 720; font-size: var(--step-1); }
+  .theme-pick {
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    border: 1.5px solid var(--brass); color: transparent; transition: background-color 0.2s, color 0.2s;
+  }
+  .theme-desc { color: var(--on-green-soft); font-size: var(--step--1); }
+  .theme:hover .photo-slot { border-color: var(--brass-light); }
+  .theme input:checked ~ .photo-slot { border-style: solid; border-color: var(--kesar); box-shadow: 0 0 0 3px rgba(240, 138, 36, 0.35); }
+  .theme input:checked ~ .theme-text .theme-pick { background: var(--kesar); border-color: var(--kesar); color: var(--mehndi-950); }
+  .theme input:focus-visible ~ .photo-slot { outline: 3px solid var(--brass-light); outline-offset: 3px; }
+  @media (max-width: 860px) {
+    .decor { padding-block: var(--s-8); }
+    .themes { grid-template-columns: 1fr 1fr; }
+    .theme-lead { grid-column: 1 / -1; grid-row: auto; }
+    .theme:last-child { grid-column: auto; }
+    .theme:last-child .photo-slot { aspect-ratio: 4 / 3; }
+    .theme-lead .photo-slot { height: auto; aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 520px) { .themes { grid-template-columns: 1fr; } }
+
+  /* ---------- OCCASIONS ---------- */
+  .occasions { padding-block: var(--s-9) var(--s-8); }
+  .occasions > .wrap > h2 { font-size: var(--step-3); margin-bottom: var(--s-6); }
+  .occ-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+  .occ-list li {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: var(--s-5);
+    align-items: baseline; padding-block: var(--s-5); border-bottom: 1px solid var(--rule);
+  }
+  .occ-list h3 { font-size: var(--step-2); }
+  .occ-list p { color: var(--ink-soft); }
+  .occ-list a { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 650; color: var(--brass-deep); text-decoration: none; white-space: nowrap; min-height: 44px; }
+  .occ-list a:hover { text-decoration: underline; }
+  @media (max-width: 760px) {
+    .occasions { padding-block: var(--s-8) var(--s-7); }
+    .occ-list li { grid-template-columns: 1fr; gap: var(--s-2); }
+  }
+
+  /* ---------- REVIEWS (kumkum field) ---------- */
+  .reviews { background: var(--kumkum); color: var(--kumkum-ink); padding-block: var(--s-9); }
+  .reviews h2 { font-size: var(--step-3); color: #fff; margin-bottom: var(--s-7); max-width: 18ch; }
+  .rev-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); align-items: start; }
+  .rev-grid figure:first-child blockquote { font-size: var(--step-2); line-height: 1.4; font-weight: 480; }
+  .rev-grid figure { margin: 0; display: grid; gap: var(--s-5); align-content: space-between; padding-top: var(--s-5); border-top: 2px solid var(--brass); }
+  .rev-grid blockquote { margin: 0; font-size: var(--step-1); line-height: 1.5; }
+  .rev-grid blockquote p::before { content: '“'; color: var(--brass-light); font-weight: 800; margin-right: 0.05em; }
+  .rev-grid blockquote p::after { content: '”'; color: var(--brass-light); font-weight: 800; }
+  .rev-grid figcaption { display: grid; }
+  .rev-grid figcaption strong { color: #fff; font-weight: 680; }
+  .rev-grid figcaption span { font-size: var(--step--1); color: #e8bfa8; }
+  @media (max-width: 900px) {
+    .reviews { padding-block: var(--s-8); }
+    .rev-grid { grid-template-columns: 1fr; gap: var(--s-5); }
+  }
+
+  /* ---------- CONTACT + FORM ---------- */
+  .contact { padding-block: var(--s-9); background: var(--chaas-2); }
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--s-8); align-items: start; }
+  .founder h2 { font-size: var(--step-3); }
+  .founder > p { margin-top: var(--s-5); color: var(--ink-soft); max-width: 40ch; }
+  .founder-card { margin-top: var(--s-6); display: grid; gap: var(--s-3); justify-items: start; }
+  .founder-name { font-weight: 650; }
+  .founder-phone { font-stretch: 112%; font-weight: 760; font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); white-space: nowrap; text-decoration: none; line-height: 1.1; color: var(--mehndi-900); }
+  .founder-phone:hover { color: var(--brass-deep); }
+  .founder-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+  .founder-actions .btn-ghost { color: var(--mehndi-900); }
+  .founder-actions .btn-ghost:hover { background: rgba(18, 52, 38, 0.08); }
+  .founder-addr { display: flex; gap: 0.5rem; align-items: flex-start; text-decoration: none; color: var(--ink-soft); margin-top: var(--s-3); }
+  .founder-addr :global(.icon) { margin-top: 0.2rem; color: var(--brass-deep); }
+  .founder-addr u { text-decoration-color: var(--brass); }
+
+  .plan-panel {
+    background: #fff;
+    border-radius: 22px;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    box-shadow: 0 0 0 1.5px var(--brass), 0 0 0 6px #f0e2b8, 0 0 0 7.5px var(--brass-deep), var(--shadow-2);
+  }
+  .plan-form h2 { font-size: var(--step-3); }
+  .plan-sub { margin-top: var(--s-3); color: var(--ink-soft); }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .form-alert { margin-top: var(--s-4); padding: var(--s-3) var(--s-4); border-radius: 10px; background: #fbe6e1; color: #7a1d10; font-weight: 550; }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-top: var(--s-5); }
+  .span-2 { grid-column: 1 / -1; }
+  .services { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .services legend { padding: 0; margin-bottom: 0.35rem; }
+  .svc-row { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .svc { position: relative; }
+  .svc input { position: absolute; opacity: 0; inset: 0; }
+  .svc span {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0.5rem 1rem;
+    border-radius: 999px; border: 1.5px solid #c9cfbf; cursor: pointer; font-weight: 550;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .svc span:hover { border-color: var(--brass-deep); }
+  .svc input:checked + span { background: var(--mehndi-900); border-color: var(--mehndi-900); color: var(--on-green); }
+  .svc input:focus-visible + span { outline: 3px solid var(--kesar-deep); outline-offset: 2px; }
+  .thali-sum { padding: var(--s-4); border-radius: 12px; background: #fbf3dc; border: 1px solid #ecd9a4; }
+  .sum-list { margin-top: 0.25rem; }
+  .sum-edit { display: inline-block; margin-top: var(--s-2); font-weight: 600; font-size: var(--step--1); color: var(--brass-deep); }
+  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); margin-top: var(--s-6); }
+  .wa-alt { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--mehndi-800); min-height: 44px; }
+
+  .sent { display: grid; justify-items: start; gap: var(--s-4); padding-block: var(--s-4); outline: none; }
+  .sent-mark { width: 64px; height: 64px; }
+  .sent h3 { font-size: var(--step-3); }
+  .sent p { color: var(--ink-soft); font-size: var(--step-1); }
+
+  @media (max-width: 920px) {
+    .contact { padding-block: var(--s-8); }
+    .contact-grid { grid-template-columns: 1fr; gap: var(--s-7); }
+  }
+  @media (max-width: 520px) { .fields { grid-template-columns: 1fr; } }
+</style>
